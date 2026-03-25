@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TLW MR PASI DIAMOND STORE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+/* ===== Background ===== */
+body{
+  font-family:'Poppins',sans-serif;
+  background: url('OIP.webp') no-repeat center center fixed;
+  background-size: cover;
+  margin:0;
+  padding:20px;
+  color:white;
+  text-align:center;
+}
+
+/* ===== Overlay Box ===== */
+.overlay{
+  background: rgba(255, 0, 0, 0.9);
+  padding:30px;
+  border-radius:15px;
+  max-width:500px;
+  margin:auto;
+}
+
+/* ===== Title with Gradient ===== */
+.title{
+  font-size:28px;
+  font-weight:700;
+  margin-bottom:25px;
+  background: linear-gradient(90deg, #FFD700, #FFA500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+}
+
+/* ===== Inputs & Button ===== */
+input,select,button{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:6px;
+  border:none;
+  font-size:16px;
+  box-sizing:border-box;
+}
+
+button{
+  background:#22c55e;
+  color:white;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:16px;
+  transition: background 0.2s;
+}
+button:hover{
+  background:#16a34a;
+}
+
+/* ===== Payment Cards ===== */
+#paymentDetails{
+  margin-top:15px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.card{
+  background: linear-gradient(135deg, #1e293b, #334155);
+  padding:15px 20px;
+  border-radius:15px;
+  text-align:left;
+  display:flex;
+  align-items:center;
+  gap:15px;
+  box-shadow:0 6px 12px rgba(0,0,0,0.5);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.card:hover{
+  transform: translateY(-5px);
+  box-shadow:0 12px 24px rgba(0,0,0,0.6);
+}
+
+.card img{
+  width:50px;
+  height:50px;
+  object-fit:contain;
+  border-radius:10px;
+  background:white;
+  padding:5px;
+}
+
+.card-content h4{
+  margin:0 0 5px 0;
+  font-size:16px;
+  color:#FFD700;
+  font-weight:600;
+}
+
+.card-content p{
+  margin:2px 0;
+  font-size:14px;
+  color:#f0f0f0;
+}
+
+.total{
+  margin-top:12px;
+  font-size:20px;
+  font-weight:bold;
+  color:#FFD700;
+}
+
+/* ===== Responsive ===== */
+@media(max-width:480px){
+  .overlay{
+    padding:20px;
+  }
+  .card{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .card img{
+    width:50px;
+    height:50px;
+    margin-bottom:5px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay">
+
+<div class="title">TLW MR PASI DIAMOND STORE</div>
+
+<input type="text" id="player" placeholder="Player ID">
+<input type="text" id="phone" placeholder="Whatsapp Number">
+
+<!-- PACK SELECT -->
+<select id="pack">
+<option value="25|80">25 💎 - Rs.80</option>
+<option value="100|290">100 💎 - Rs.290</option>
+<option value="310|880">310 💎 - Rs.880</option>
+<option value="520|1450">520 💎 - Rs.1450</option>
+<option value="1060|2880">1060 💎 - Rs.2880</option>
+<option value="2180|5920">2180 💎 - Rs.5920</option>
+<option value="5600|14660">5600 💎 - Rs.14660</option>
+<option value="11500|30200">11500 💎 - Rs.30200</option>
+
+<option value="Weekly-Lite|140">Weekly-Lite - Rs.140</option>
+<option value="Weekly|520">Weekly - Rs.520</option>
+<option value="Monthly|2250">Monthly - Rs.2250</option>
+
+<option value="Evo Access 3D|190">Evo Access 3D - Rs.190</option>
+<option value="Evo Access 7D|280">Evo Access 7D - Rs.280</option>
+<option value="Evo Access 30D|780">Evo Access 30D - Rs.780</option>
+</select>
+
+<input type="number" id="qty" value="1" min="1">
+
+<!-- PAYMENT -->
+<select id="payment">
+<option value="b1">People's Bank</option>
+<option value="b2">NSB Bank</option>
+<option value="b3">Commercial Bank</option>
+<option value="ez">eZ Cash</option>
+</select>
+
+<!-- PAYMENT DETAILS -->
+<div id="paymentDetails"></div>
+
+<!-- REFERENCE NUMBER -->
+<input type="text" id="ref" placeholder="Payment Reference Number">
+
+<!-- TOTAL -->
+<div class="total">Total: Rs.<span id="total">0</span></div>
+
+<button onclick="send()">Submit Order</button>
+
+</div>
+
+<script>
+// ===== AUTO SELECT FROM URL =====
+let param = new URLSearchParams(window.location.search).get("pack");
+if(param){
+  param = decodeURIComponent(param);
+  document.getElementById("pack").value = param;
+}
+
+// ===== TOTAL CALC =====
+function calc(){
+  let price = document.getElementById("pack").value.split('|')[1];
+  let qty = document.getElementById("qty").value;
+  document.getElementById("total").innerText = price * qty;
+}
+
+// ===== PAYMENT DETAILS =====
+function pay(){
+  const val = document.getElementById("payment").value;
+  const box = document.getElementById("paymentDetails");
+  box.innerHTML = '';
+
+  let cards = [];
+
+  if(val=="b1"){
+    cards.push({
+      name:"People's Bank",
+      branch:"Ampara",
+      account:"189200120107481",
+      logo:"peoples_bank.png"
+    });
+  }
+  else if(val=="b2"){
+    cards.push({
+      name:"NSB Bank",
+      branch:"Ampara",
+      account:"300081493034",
+      logo:"nsb_bank.png"
+    });
+  }
+  else if(val=="b3"){
+    cards.push({
+      name:"BOC Bank",
+      branch:"Ampara",
+      account:"XXXXXXXXXX",
+      logo:"boc_bank.png"
+    });
+  }
+  else{
+    cards.push({
+      name:"eZ Cash",
+      branch:"Mobile Wallet",
+      account:"0762253318",
+      logo:"ez_cash.png"
+    });
+  }
+
+  cards.forEach(c=>{
+    const div = document.createElement('div');
+    div.className='card';
+    div.innerHTML=`
+      <img src="${c.logo}" alt="${c.name} Logo">
+      <div class="card-content">
+        <h4>${c.name}</h4>
+        <p>Branch: ${c.branch}</p>
+        <p>Account/Number: ${c.account}</p>
+      </div>`;
+    box.appendChild(div);
+  });
+}
+
+// ===== EVENTS =====
+document.getElementById("pack").onchange=calc;
+document.getElementById("qty").oninput=calc;
+document.getElementById("payment").onchange=pay;
+
+// ===== INIT =====
+calc();
+pay();
+
+// ===== SEND WHATSAPP =====
+function send(){
+  let p=document.getElementById("player").value;
+  let ph=document.getElementById("phone").value;
+  let pack=document.getElementById("pack").value;
+  let total=document.getElementById("total").innerText;
+  let ref=document.getElementById("ref").value;
+  let payment=document.getElementById("payment").value;
+
+  if(!p || !ph || !ref){
+    alert("Please fill all details + reference number");
+    return;
+  }
+
+  let payName="";
+  if(payment=="b1") payName="People's Bank";
+  else if(payment=="b2") payName="NSB Bank";
+  else if(payment=="b3") payName="Commercial Bank";
+  else payName="eZ Cash";
+
+  let msg=`🔥 NEW ORDER 🔥
+
+Player ID: ${p}
+Phone: ${ph}
+
+Pack: ${pack}
+Total: Rs.${total}
+
+Payment Method: ${payName}
+Reference No: ${ref}
+
+Please attach payment receipt screenshot`;
+
+  window.open("https://wa.me/94755582915?text="+encodeURIComponent(msg));
+}
+</script>
+
+</body>
+</html>
