@@ -4,7 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TLW MR PASI DIAMOND STORE</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Poppins',sans-serif; background:#FFFFFF; color:#000000;}
@@ -32,11 +34,11 @@ footer{text-align:center; padding:20px; color:#D60000;}
 
 /* ===== HOME SECTION ===== */
 #home{
-  min-height:100vh;
+  min-height:100dvh; /* 🔥 FIX */
   width:100%;
-  background-image: url('https://i.postimg.cc/kR5hJ31Z/20260124_225301.png');
-  background-size: contain; /* changed from cover to contain for small screens */
-  background-position: center top;
+  background-image: url('home_bg.png');
+  background-size: cover; /* 🔥 FIX */
+  background-position: center;
   background-repeat: no-repeat;
   display: flex; flex-direction: column;
   justify-content: center;
@@ -47,7 +49,7 @@ footer{text-align:center; padding:20px; color:#D60000;}
 #home::before{
   content:'';
   position:absolute; top:0; left:0; width:100%; height:100%;
-  background: rgba(0,0,0,0.25); /* less dark overlay for mobile */
+  background: rgba(0,0,0,0.25);
   z-index:1;
 }
 #home h1, #home p{
@@ -63,16 +65,13 @@ footer{text-align:center; padding:20px; color:#D60000;}
   #home h1{font-size:28px;}
   #home p{font-size:18px;}
 }
+
 @media (max-width:480px){
   #home h1{font-size:24px;}
   #home p{font-size:16px;}
   .card{width:140px;}
   nav{flex-direction:column; gap:10px; padding:10px;}
   nav ul{flex-wrap:wrap; justify-content:center;}
-  #home{
-    background-size: 70%; /* shrink image to 70% on mobile */
-    background-position: top center;
-  }
 }
 </style>
 </head>
