@@ -8,49 +8,77 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Poppins',sans-serif; background:#FFFFFF; color:#000000;}
-nav{display:flex; justify-content:space-between; padding:15px 30px; background:#D60000;}
+
+/* ===== NAVIGATION ===== */
+nav{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:15px 30px; background:#D60000; position:sticky; top:0; z-index:10;
+}
 nav h2{color:#FFFFFF;}
 nav ul{display:flex; list-style:none; gap:20px;}
-nav ul li{cursor:pointer;}
-nav ul li:hover{color:#FFFFFF;}
+nav ul li{cursor:pointer; color:white; transition:0.2s;}
+nav ul li:hover{color:#FFD700;}
+
+/* ===== SECTIONS ===== */
 .section{padding:60px 20px; text-align:center;}
 .cards{display:flex; flex-wrap:wrap; justify-content:center; gap:20px;}
-.card{background:#AFF5FF; padding:20px; border-radius:12px; width:180px; cursor:pointer; transition:0.3s;}
+.card{
+  background:#AFF5FF; padding:20px; border-radius:12px; width:180px;
+  cursor:pointer; transition:0.3s;
+}
 .card:hover{transform:scale(1.05); box-shadow:0 0 20px red;}
-button{margin-top:10px; padding:8px 15px; border-color:black; border-radius:6px; background:#D60000; color:white; cursor:pointer;}
+button{margin-top:10px; padding:8px 15px; border:none; border-radius:6px; background:#D60000; color:white; cursor:pointer; font-weight:bold;}
 footer{text-align:center; padding:20px; color:#D60000;}
-/* HOME BACKGROUND IMAGE */
+
+/* ===== HOME SECTION ===== */
 #home{
   min-height:100vh;
-  background-image: url('https://i.postimg.cc/kR5hJ31Z/20260124_225301.png'); /* Replace with your own image URL */
-  background-size: cover;
-  background-position: center;
+  width:100%;
+  background-image: url('https://i.postimg.cc/kR5hJ31Z/20260124_225301.png');
+  background-size: contain; /* changed from cover to contain for small screens */
+  background-position: center top;
   background-repeat: no-repeat;
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
   justify-content: center;
   align-items: center;
   position: relative;
   color: white;
 }
-/* DARK OVERLAY FOR TEXT READABILITY */
 #home::before{
   content:'';
-  position:absolute;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.4);
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  background: rgba(0,0,0,0.25); /* less dark overlay for mobile */
   z-index:1;
 }
 #home h1, #home p{
   position: relative;
   z-index:2;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+  text-align:center;
+  padding:0 10px;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.5);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:768px){
+  #home h1{font-size:28px;}
+  #home p{font-size:18px;}
+}
+@media (max-width:480px){
+  #home h1{font-size:24px;}
+  #home p{font-size:16px;}
+  .card{width:140px;}
+  nav{flex-direction:column; gap:10px; padding:10px;}
+  nav ul{flex-wrap:wrap; justify-content:center;}
+  #home{
+    background-size: 70%; /* shrink image to 70% on mobile */
+    background-position: top center;
+  }
 }
 </style>
 </head>
 <body>
 
+<!-- NAVIGATION -->
 <nav>
   <h2>MR PASI TOPUP STORE</h2>
   <ul>
@@ -61,13 +89,13 @@ footer{text-align:center; padding:20px; color:#D60000;}
   </ul>
 </nav>
 
-<!-- HOME SECTION WITH BACKGROUND IMAGE -->
+<!-- HOME SECTION -->
 <div class="section" id="home">
   <h1>TLW MR PASI DIAMOND STORE</h1>
   <p>Fast • Secure • Instant</p>
 </div>
 
-<!-- Diamond Packs -->
+<!-- DIAMONDS -->
 <div class="section" id="diamonds">
   <h2>💎 Diamond Prices</h2>
   <div class="cards">
@@ -82,7 +110,7 @@ footer{text-align:center; padding:20px; color:#D60000;}
   </div>
 </div>
 
-<!-- Membership Packs -->
+<!-- MEMBERSHIP -->
 <div class="section" id="membership">
   <h2>Membership Prices</h2>
   <div class="cards">
@@ -92,7 +120,7 @@ footer{text-align:center; padding:20px; color:#D60000;}
   </div>
 </div>
 
-<!-- Evo Access -->
+<!-- EVO ACCESS -->
 <div class="section" id="EvoAccess">
   <h2>Evo Access</h2>
   <div class="cards">
@@ -109,7 +137,6 @@ function scrollToSection(id){
   document.getElementById(id).scrollIntoView({behavior:'smooth'});
 }
 
-// BUY NOW REDIRECT TO TOPUP.HTML
 function buyNow(pack, price){
   const packParam = encodeURIComponent(pack) + '|' + price;
   window.location.href = `topup.html?pack=${packParam}`;
