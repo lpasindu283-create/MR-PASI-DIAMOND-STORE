@@ -3,262 +3,341 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="logo.png">
 <title>TLW MR PASI DIAMOND STORE</title>
+
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
 body{
   font-family:'Poppins',sans-serif;
-  margin:0;
-  padding:0;
   color:white;
-  text-align:center;
-  min-height:100vh;
-  background: url('OIP.webp') center center / cover no-repeat fixed;
-  position: relative;
+  overflow-x:hidden;
+  background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
 }
 
-body::after{
+/* ===== LOADER ===== */
+#loader{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+.loader{
+  width:60px;
+  height:60px;
+  border:6px solid #333;
+  border-top:6px solid #ff0000;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{
+  0%{transform:rotate(0);}
+  100%{transform:rotate(360deg);}
+}
+
+/* ===== ROTATE MESSAGE ===== */
+#rotate-msg{
+  position:fixed;
+  width:100%;
+  height:100%;
+  background:black;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:10000;
+  text-align:center;
+}
+
+.rotate-box h2{
+  margin-top:20px;
+  font-size:20px;
+  color:white;
+}
+
+/* PHONE ANIMATION */
+.phone{
+  width:50px;
+  height:80px;
+  border:4px solid #fff;
+  border-radius:10px;
+  position:relative;
+  animation:rotatePhone 1.5s infinite;
+}
+
+.phone::after{
   content:'';
   position:absolute;
-  top:0; left:0;
-  width:100%; height:100%;
-  background: rgba(0,0,0,0.65);
-  z-index:-1;
+  width:10px;
+  height:10px;
+  background:#fff;
+  border-radius:50%;
+  bottom:5px;
+  left:50%;
+  transform:translateX(-50%);
 }
 
-.overlay{
-  background: rgba(255,0,0,0.85);
-  padding:30px;
-  border-radius:15px;
-  max-width:500px;
-  margin:50px auto;
-  box-shadow:0 8px 16px rgba(0,0,0,0.5);
-  position: relative;
-  z-index:1;
+@keyframes rotatePhone{
+  0%{transform:rotate(0deg);}
+  50%{transform:rotate(90deg);}
+  100%{transform:rotate(0deg);}
 }
 
-.title{
-  font-size:28px;
-  font-weight:700;
-  margin-bottom:25px;
-  background: linear-gradient(90deg, #FFD700, #FFA500);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-}
-
-input, select, button{
-  width:100%;
-  padding:12px;
-  margin:10px 0;
-  border-radius:6px;
-  border:none;
-  font-size:16px;
-  box-sizing:border-box;
-}
-
-button{
-  background:#22c55e;
-  color:white;
-  cursor:pointer;
-  font-weight:bold;
-  font-size:16px;
-  transition: background 0.2s;
-}
-button:hover{
-  background:#16a34a;
-}
-
-#paymentDetails{
-  margin-top:15px;
+/* ===== NAV ===== */
+nav{
   display:flex;
-  flex-direction:column;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 20px;
+  background:#1a1a1a;
+  border-bottom:1px solid #333;
+}
+
+.logo-box{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  cursor:pointer;
+}
+
+.logo-box img{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+}
+
+.logo-box h2{
+  font-size:18px;
+  color:white;
+}
+
+nav ul{
+  display:flex;
+  gap:15px;
+  list-style:none;
+}
+nav ul li{
+  cursor:pointer;
+  transition:0.3s;
+}
+nav ul li:hover{
+  color:#FFD700;
+}
+
+/* ===== HOME ===== */
+#home{
+  height:100vh;
+  background:url('bg_logo.png') no-repeat center;
+  background-size:cover;
+  position:relative;
+}
+
+/* LOGO CIRCLE */
+.home-logo{
+  position:absolute;
+  top:20px;
+  left:20px;
+  width:75px;
+  height:75px;
+  border-radius:50%;
+  overflow:hidden;
+  background:#111;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 10px #00f0ff, 0 0 25px #00f0ff;
+}
+
+.home-logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* ===== SECTION ===== */
+.section{
+  padding:50px 15px;
+  text-align:center;
+}
+
+/* ===== CARDS ===== */
+.cards{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
   gap:15px;
 }
 
 .card{
-  background: linear-gradient(135deg, #1e293b, #334155);
-  padding:15px 20px;
+  width:160px;
+  padding:15px;
   border-radius:15px;
-  text-align:left;
-  display:flex;
-  align-items:center;
-  gap:15px;
-  box-shadow:0 6px 12px rgba(0,0,0,0.5);
-  transition: transform 0.25s, box-shadow 0.25s;
+  background:rgba(30,30,30,0.6);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.1);
+  text-align:center;
+  cursor:pointer;
+  transition:0.3s;
+  position:relative;
+  overflow:hidden;
 }
+
+.card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(120deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3), rgba(255,255,255,0.1));
+  transform:skewX(-20deg);
+  transition:0.5s;
+}
+
+.card:hover::before{
+  left:100%;
+}
+
 .card:hover{
-  transform: translateY(-5px);
-  box-shadow:0 12px 24px rgba(0,0,0,0.6);
+  transform:scale(1.05);
+  box-shadow:0 0 15px #ff0000, 0 0 30px #ff0000;
 }
+
+.card h4{margin-bottom:5px;}
 
 .card img{
-  width:50px;
-  height:50px;
+  width:100%;
+  height:80px;
   object-fit:contain;
-  border-radius:10px;
-  background:white;
-  padding:5px;
+  margin:5px 0;
 }
 
-.card-content h4{
-  margin:0 0 5px 0;
-  font-size:16px;
-  color:#FFD700;
-  font-weight:600;
-}
-
-.card-content p{
-  margin:2px 0;
-  font-size:14px;
-  color:#f0f0f0;
-}
-
-.total{
-  margin-top:12px;
-  font-size:20px;
+.card p{
   font-weight:bold;
   color:#FFD700;
 }
 
+/* MOBILE */
 @media(max-width:480px){
-  .overlay{
-    padding:20px;
-    margin:30px 10px;
-  }
-  .card{
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .card img{
-    width:50px;
-    height:50px;
-    margin-bottom:5px;
-  }
+  nav{flex-direction:column;gap:10px;}
+  .card{width:140px;}
 }
 </style>
 </head>
+
 <body>
 
-<div class="overlay">
-<div class="title">TLW MR PASI DIAMOND STORE</div>
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader"></div>
+</div>
 
-<input type="text" id="player" placeholder="Player ID">
-<input type="text" id="phone" placeholder="Whatsapp Number">
+<!-- ROTATE MESSAGE -->
+<div id="rotate-msg">
+  <div class="rotate-box">
+    <div class="phone"></div>
+    <h2>Please Rotate Your Phone</h2>
+  </div>
+</div>
 
-<select id="pack">
-<option value="25|80">25 💎 - Rs.80</option>
-<option value="100|290">100 💎 - Rs.290</option>
-<option value="310|880">310 💎 - Rs.880</option>
-<option value="520|1450">520 💎 - Rs.1450</option>
-<option value="1060|2880">1060 💎 - Rs.2880</option>
-<option value="2180|5920">2180 💎 - Rs.5920</option>
-<option value="5600|14660">5600 💎 - Rs.14660</option>
-<option value="11500|30200">11500 💎 - Rs.30200</option>
+<!-- NAV -->
+<nav>
+  <div class="logo-box" onclick="goContact()">
+    <img src="Logo.png">
+    <h2>TLW MR PASI</h2>
+  </div>
 
-<option value="Weekly-Lite|140">Weekly-Lite - Rs.140</option>
-<option value="Weekly|520">Weekly - Rs.520</option>
-<option value="Monthly|2250">Monthly - Rs.2250</option>
+  <ul>
+    <li onclick="go('diamonds')">Diamonds</li>
+    <li onclick="go('membership')">Membership</li>
+    <li onclick="go('evo')">Evo</li>
+  </ul>
+</nav>
 
-<option value="Evo Access 3D|190">Evo Access 3D - Rs.190</option>
-<option value="Evo Access 7D|280">Evo Access 7D - Rs.280</option>
-<option value="Evo Access 30D|780">Evo Access 30D - Rs.780</option>
-</select>
+<!-- HOME -->
+<div id="home">
+  <div class="home-logo">
+    <img src="Logo.png">
+  </div>
+</div>
 
-<input type="number" id="qty" value="1" min="1">
+<!-- DIAMONDS -->
+<div class="section" id="diamonds">
+<h2>💎 Diamond Prices</h2>
 
-<select id="payment">
-<option value="b1">People's Bank</option>
-<option value="b2">NSB Bank</option>
-<option value="b3">Commercial Bank</option>
-<option value="ez">eZ Cash</option>
-</select>
+<div class="cards">
+<div class="card" onclick="buy('25 💎','80')"><h4>25 💎</h4><img src="diamond.png"><p>Rs.80</p></div>
+<div class="card" onclick="buy('100 💎','290')"><h4>100 💎</h4><img src="diamond.png"><p>Rs.290</p></div>
+<div class="card" onclick="buy('310 💎','880')"><h4>310 💎</h4><img src="diamond.png"><p>Rs.880</p></div>
+<div class="card" onclick="buy('520 💎','1450')"><h4>520 💎</h4><img src="diamond.png"><p>Rs.1450</p></div>
+<div class="card" onclick="buy('1060 💎','2880')"><h4>1060 💎</h4><img src="diamond.png"><p>Rs.2880</p></div>
+<div class="card" onclick="buy('2180 💎','5920')"><h4>2180 💎</h4><img src="diamond.png"><p>Rs.5920</p></div>
+<div class="card" onclick="buy('5600 💎','14660')"><h4>5600 💎</h4><img src="diamond.png"><p>Rs.14660</p></div>
+<div class="card" onclick="buy('11500 💎','30200')"><h4>11500 💎</h4><img src="diamond.png"><p>Rs.30200</p></div>
+</div>
+</div>
 
-<div id="paymentDetails"></div>
+<!-- MEMBERSHIP -->
+<div class="section" id="membership">
+<h2>Membership</h2>
 
-<input type="text" id="ref" placeholder="Payment Reference Number">
+<div class="cards">
+<div class="card" onclick="buy('Weekly-Lite','140')"><h4>Weekly Lite</h4><img src="Weekly-Lite.png"><p>Rs.140</p></div>
+<div class="card" onclick="buy('Weekly','520')"><h4>Weekly</h4><img src="Weekly.png"><p>Rs.520</p></div>
+<div class="card" onclick="buy('Monthly','2250')"><h4>Monthly</h4><img src="Monthly.png"><p>Rs.2250</p></div>
+</div>
+</div>
 
-<div class="total">Total: Rs.<span id="total">0</span></div>
+<!-- EVO -->
+<div class="section" id="evo">
+<h2>Evo Access</h2>
 
-<button onclick="send()">Submit Order</button>
-
+<div class="cards">
+<div class="card" onclick="buy('Evo Access 3D','190')"><h4>Evo 3D</h4><img src="Evo_Access_3D.png"><p>Rs.190</p></div>
+<div class="card" onclick="buy('Evo Access 7D','280')"><h4>Evo 7D</h4><img src="Evo_Access_7D.png"><p>Rs.280</p></div>
+<div class="card" onclick="buy('Evo Access 30D','780')"><h4>Evo 30D</h4><img src="Evo_Access_30D.png"><p>Rs.780</p></div>
+</div>
 </div>
 
 <script>
-// ===== TOTAL CALC =====
-function calc(){
-  let packVal = document.getElementById("pack").value;
-  let price = parseInt(packVal.split('|')[1]);
-  let qty = parseInt(document.getElementById("qty").value);
-  document.getElementById("total").innerText = price * qty;
+// LOADER
+window.onload = ()=>{
+  document.getElementById("loader").style.display="none";
+  checkOrientation();
 }
 
-// ===== PAYMENT DETAILS =====
-function pay(){
-  const val = document.getElementById("payment").value;
-  const box = document.getElementById("paymentDetails");
-  box.innerHTML = '';
-  let cards = [];
-  if(val=="b1") cards.push({name:"People's Bank", branch:"Ampara", account:"189200120107481", logo:"peoples_bank.png"});
-  else if(val=="b2") cards.push({name:"NSB Bank", branch:"Ampara", account:"300081493034", logo:"nsb_bank.png"});
-  else if(val=="b3") cards.push({name:"BOC Bank", branch:"Ampara", account:"XXXXXXXXXX", logo:"boc_bank.png"});
-  else cards.push({name:"eZ Cash", branch:"Mobile Wallet", account:"0762253318", logo:"ez_cash.png"});
-  cards.forEach(c=>{
-    const div = document.createElement('div');
-    div.className='card';
-    div.innerHTML=`
-      <img src="${c.logo}" alt="${c.name} Logo">
-      <div class="card-content">
-        <h4>${c.name}</h4>
-        <p>Branch: ${c.branch}</p>
-        <p>Account/Number: ${c.account}</p>
-      </div>`;
-    box.appendChild(div);
-  });
-}
-
-// ===== EVENTS =====
-document.getElementById("pack").addEventListener('change', calc);
-document.getElementById("qty").addEventListener('input', calc);
-document.getElementById("payment").addEventListener('change', pay);
-
-// ===== AUTO SELECT FROM URL =====
-function autoSelectPack(){
-  const urlPack = new URLSearchParams(window.location.search).get("pack");
-  if(urlPack){
-    const options = document.querySelectorAll("#pack option");
-    options.forEach(opt=>{
-      if(opt.value === urlPack){
-        opt.selected = true;
-      }
-    });
+// ROTATE CHECK
+function checkOrientation(){
+  if(window.innerHeight > window.innerWidth){
+    document.getElementById("rotate-msg").style.display = "flex";
+  }else{
+    document.getElementById("rotate-msg").style.display = "none";
   }
 }
-autoSelectPack();
-calc();
-pay();
 
-// ===== SEND WHATSAPP =====
-function send(){
-  let p=document.getElementById("player").value;
-  let ph=document.getElementById("phone").value;
-  let pack=document.getElementById("pack").value;
-  let total=document.getElementById("total").innerText;
-  let ref=document.getElementById("ref").value;
-  let payment=document.getElementById("payment").value;
-  if(!p||!ph||!ref){alert("Please fill all details + reference number"); return;}
-  let payName = payment=="b1"?"People's Bank":payment=="b2"?"NSB Bank":payment=="b3"?"BOC Bank":"eZ Cash";
-  let msg=`🔥 NEW ORDER 🔥
-Player ID: ${p}
-Phone: ${ph}
-Pack: ${pack}
-Total: Rs.${total}
-Payment Method: ${payName}
-Reference No: ${ref}
-Please attach payment receipt screenshot`;
-  window.open("https://wa.me/94755582915?text="+encodeURIComponent(msg));
+window.addEventListener("resize", checkOrientation);
+
+// SCROLL
+function go(id){
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+// BUY
+function buy(pack, price){
+  const full = encodeURIComponent(pack + "|" + price);
+  window.location.href = "topup.html?pack=" + full;
+}
+
+// CONTACT
+function goContact(){
+  window.location.href = "contact.html";
 }
 </script>
 
