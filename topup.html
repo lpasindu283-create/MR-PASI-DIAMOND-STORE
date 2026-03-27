@@ -9,42 +9,51 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
+/* ===== BODY + BACKGROUND ===== */
 body{
   font-family:'Poppins',sans-serif;
   margin:0; padding:0;
   color:white;
-  text-align:center;
   min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   background: url('OIP.webp') center center / cover no-repeat fixed;
-  position: relative;
+  overflow-x:hidden;
+  position:relative;
 }
+
 body::after{
   content:'';
   position:absolute;
   top:0; left:0;
   width:100%; height:100%;
-  background: rgba(0,0,0,0.75);
-  z-index:-1;
+  background: rgba(0,0,0,0.6); /* overlay dark */
+  z-index:0;
 }
 
+/* ===== CENTERED CARD ===== */
 .overlay{
-  background: rgba(25,25,25,0.85);
-  padding:30px;
-  border-radius:15px;
-  max-width:500px;
-  margin:50px auto;
-  box-shadow:0 8px 20px rgba(0,0,0,0.7);
-  position: relative;
+  position:relative;
   z-index:1;
-  animation:fadeIn 1.5s ease;
+  background: rgba(20,20,30,0.85);
+  padding:30px 25px;
+  border-radius:20px;
+  max-width:500px;
+  width:90%;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.6), 0 0 20px rgba(255,215,0,0.2) inset;
+  backdrop-filter: blur(15px) saturate(180%);
+  animation:fadeIn 1s ease forwards;
+  text-align:center;
 }
 
+/* ===== FADE IN CARD ===== */
 @keyframes fadeIn{
-  0%{opacity:0; transform:translateY(-20px);}
+  0%{opacity:0; transform:translateY(-30px);}
   100%{opacity:1; transform:translateY(0);}
 }
 
-/* LOGO */
+/* ===== LOGO ===== */
 #logo{
   width:80px;
   height:80px;
@@ -56,42 +65,42 @@ body::after{
   50%{transform: translateY(-10px);}
 }
 
-/* TITLE ANIMATION */
+/* ===== TITLE ===== */
 .title{
   font-family:'Orbitron', sans-serif;
-  font-size:26px;
+  font-size:28px;
   font-weight:700;
-  margin-bottom:15px;
+  margin-bottom:20px;
   color:#FFD700;
-  text-shadow:0 0 5px #FF0000, 0 0 10px #FF4500, 0 0 20px #FFD700;
+  text-shadow:0 0 10px #FF0000,0 0 15px #FF4500,0 0 25px #FFD700;
   animation:glow 1.5s ease-in-out infinite alternate;
 }
 @keyframes glow{
-  0%{text-shadow:0 0 5px #FF0000, 0 0 10px #FF4500, 0 0 20px #FFD700;}
-  50%{text-shadow:0 0 10px #FF0000, 0 0 20px #FF6347, 0 0 25px #FFD700;}
-  100%{text-shadow:0 0 5px #FF0000, 0 0 10px #FF4500, 0 0 20px #FFD700;}
+  0%{text-shadow:0 0 5px #FF0000,0 0 10px #FF4500,0 0 20px #FFD700;}
+  50%{text-shadow:0 0 12px #FF0000,0 0 22px #FF6347,0 0 28px #FFD700;}
+  100%{text-shadow:0 0 5px #FF0000,0 0 10px #FF4500,0 0 20px #FFD700;}
 }
 
-/* INPUTS & SELECTS */
+/* ===== INPUTS & SELECTS ===== */
 input, select{
   width:100%;
   padding:12px;
   margin:10px 0;
-  border-radius:8px;
+  border-radius:10px;
   border:none;
   font-size:16px;
   box-sizing:border-box;
   background:#1f2937;
   color:#f0f0f0;
-  box-shadow:0 4px 10px rgba(0,0,0,0.5);
+  box-shadow:0 4px 12px rgba(0,0,0,0.5);
   transition:0.3s;
 }
 input:focus, select:focus{
   outline:none;
-  box-shadow:0 0 8px #FF4500;
+  box-shadow:0 0 10px #FF4500;
 }
 
-/* SUBMIT BUTTON */
+/* ===== BUTTON ===== */
 button{
   font-family:'Orbitron', sans-serif;
   background:#FF0000;
@@ -100,16 +109,16 @@ button{
   font-weight:bold;
   font-size:16px;
   padding:12px;
-  border-radius:8px;
-  transition: 0.3s;
-  text-shadow: 1px 1px 3px #000;
+  border-radius:10px;
+  transition:0.3s;
+  text-shadow:1px 1px 3px #000;
 }
 button:hover{
   background:#FF4500;
   box-shadow:0 0 12px #FFD700;
 }
 
-/* PAYMENT CARDS */
+/* ===== PAYMENT CARDS ===== */
 #paymentDetails{
   margin-top:15px;
   display:flex;
@@ -117,19 +126,19 @@ button:hover{
   gap:15px;
 }
 .card{
-  background: linear-gradient(135deg, #111827, #1f2937);
+  background: linear-gradient(145deg, #111827, #1f2937);
   padding:15px 20px;
-  border-radius:12px;
+  border-radius:15px;
   text-align:left;
   display:flex;
   align-items:center;
   gap:15px;
-  box-shadow:0 6px 12px rgba(0,0,0,0.5);
-  transition: transform 0.25s, box-shadow 0.25s;
+  box-shadow:0 8px 20px rgba(0,0,0,0.6), 0 0 10px rgba(255,215,0,0.2) inset;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 .card:hover{
   transform: translateY(-5px);
-  box-shadow:0 12px 24px rgba(255,0,0,0.6);
+  box-shadow:0 12px 24px rgba(255,0,0,0.6), 0 0 15px rgba(255,215,0,0.3) inset;
 }
 .card img{
   width:50px;
@@ -151,13 +160,13 @@ button:hover{
   color:#f0f0f0;
 }
 
+/* ===== TOTAL & SERVICE ===== */
 .total{
   margin-top:12px;
   font-size:20px;
   font-weight:bold;
   color:#FFD700;
 }
-
 .serviceCharge{
   margin-top:5px;
   font-size:14px;
@@ -165,10 +174,11 @@ button:hover{
   font-weight:bold;
 }
 
+/* ===== RESPONSIVE ===== */
 @media(max-width:480px){
   .overlay{
     padding:20px;
-    margin:30px 10px;
+    width:95%;
   }
   .card{
     flex-direction: column;
